@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+
+    {% for movie in movies %}
+    {{ movie.title }}<br>
+    {{ movie.year }}<br>
+    {{ movie.imdb_id }}<br>
+    {{ movie.type }}<br>
+    {{ movie.poster }}<br>
+    {{ movie.user_name }}<br>
+    {{ movie.watched_movie }}<br>
+    {{ movie.category_id }}<br>
+    {% endfor %}
+
+{% endblock %}
