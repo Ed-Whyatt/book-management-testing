@@ -1,4 +1,9 @@
 $(document).ready(function(){
-    // Navbar Initialization
+    // Materlize Navbar Initialization
     $('.sidenav').sidenav();
+    // Materlize home page collapsible Initialization
+    $('.collapsible').collapsible();
+    $('.materialboxed').materialbox();
+    // form select 
+    $("select").formSelect();
   });

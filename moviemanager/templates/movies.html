@@ -1,15 +1,22 @@
 {% extends "base.html" %}
 {% block content %}
-
-    {% for movie in movies %}
-    {{ movie.title }}<br>
-    {{ movie.year }}<br>
-    {{ movie.imdb_id }}<br>
-    {{ movie.type }}<br>
-    {{ movie.poster }}<br>
-    {{ movie.user_name }}<br>
-    {{ movie.watched_movie }}<br>
-    {{ movie.category_id }}<br>
-    {% endfor %}
+    
+    <ul class="collapsible">
+        {% for movie in movies %}
+        <li>
+          <div class="collapsible-header"><i class="material-icons">filter_drama</i>{{ movie.title }}</div>
+          <div class="collapsible-body"><span><img src="{{ movie.poster }}" alt="Image of the movie"></span></div>
+          <div class="collapsible-body"><span>Director: {{ movie.director }}</span></div>
+          <div class="collapsible-body"><span>Year: {{ movie.year }}</span></div>
+          <div class="collapsible-body"><span>Genre: {{ movie.genre }}</span></div>
+          <div class="collapsible-body"><span>Actors: {{ movie.actors }}</span></div>
+          <div class="collapsible-body"><span>Year: {{ movie.released }}</span></div>
+          <div class="collapsible-body"><span>Type: {{ movie.type }}</span></div>
+          <div class="collapsible-body"><span>Rated: {{ movie.rated }}</span></div>
+          <div class="collapsible-body"><span>IMDB Rating: {{ movie.imdb_rating }}</span></div>
+          <div class="collapsible-body"><span>Plot: {{ movie.plot }}</span></div>
+        </li>
+        {% endfor %}
+      </ul>
 
 {% endblock %}
