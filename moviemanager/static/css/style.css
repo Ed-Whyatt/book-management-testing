@@ -6,3 +6,12 @@
     width: 30%;
     height: 30%;
 }
+
+.btn-small {
+    margin: 5px;
+}
+
+.collapsible-header .col strong {
+    margin: 5px;
+    line-height: 42px;
+}

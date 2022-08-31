@@ -4,17 +4,33 @@
     <ul class="collapsible">
         {% for movie in movies %}
         <li>
-          <div class="collapsible-header"><i class="material-icons">filter_drama</i>{{ movie.title }}</div>
-          <div class="collapsible-body"><span><img src="{{ movie.poster }}" alt="Image of the movie"></span></div>
-          <div class="collapsible-body"><span>Director: {{ movie.director }}</span></div>
-          <div class="collapsible-body"><span>Year: {{ movie.year }}</span></div>
-          <div class="collapsible-body"><span>Genre: {{ movie.genre }}</span></div>
-          <div class="collapsible-body"><span>Actors: {{ movie.actors }}</span></div>
-          <div class="collapsible-body"><span>Year: {{ movie.released }}</span></div>
-          <div class="collapsible-body"><span>Type: {{ movie.type }}</span></div>
-          <div class="collapsible-body"><span>Rated: {{ movie.rated }}</span></div>
-          <div class="collapsible-body"><span>IMDB Rating: {{ movie.imdb_rating }}</span></div>
-          <div class="collapsible-body"><span>Plot: {{ movie.plot }}</span></div>
+          <div class="collapsible-header white-text indigo darken-3 text-shadow">
+
+            <div class="col s3">
+              <i class="fas fa-caret-down white-text"></i>
+              {% if session.user|lower == movie.created_by|lower %}
+                  <a href="" class="btn-small green accent-4">Delete</a>
+                  <a href="{{ url_for('edit_movie', movie_id=movie._id) }}" class="btn-small black-text indigo lighten-3">Edit</a>
+              {% endif %}
+            </div>
+
+            <div class="col s9">
+            <strong>{{ movie.title }}</strong> Users Rating : {{ movie.created_by }} | {{ movie.user_rating }}
+            </div>
+
+          </div>
+
+          <div class="collapsible-body "><span><img src="{{ movie.poster }}" alt="Image of the movie"></span>
+          <p>Director: {{ movie.director }}</p>
+          <p>Actors: {{ movie.actors }}</p>
+          <p>Genre: {{ movie.genre }}</p>
+          <p>Year: {{ movie.released }}</p>
+          <p>Type: {{ movie.type }}</p>
+          <p>Rated: {{ movie.rated }}</p>
+          <p>IMDB Rating: {{ movie.imdb_rating }}</p>
+          <p>Plot: {{ movie.plot }}</p>
+          
+          </div>
         </li>
         {% endfor %}
       </ul>

@@ -27,13 +27,14 @@ def search():
 @app.route("/select_movie/<movie_title>", methods=["GET", "POST"])
 def select_movie(movie_title):
     if "user" not in session:
-        flash("You need to be logged in to add a task")
+        flash("You need to be logged in to add a movie")
         return redirect(url_for("get_movies"))
 
     movie = client.get(title=movie_title, fullplot=False, tomatoes=True)
     if request.method == "POST":
         task = {
             "category_id": request.form.get("category_id"),
+            "user_rating": request.form.get("user_rating"),
             "title": movie.get("title"),
             "poster": movie.get("poster"),
             "director": movie.get("director"),
@@ -53,6 +54,36 @@ def select_movie(movie_title):
     categories = list(Category.query.order_by(Category.category_name).all())
     return render_template(
         "select_this_movie.html", categories=categories, movie=movie)
+
+
+@app.route("/edit_movie/<movie_id>", methods=["GET", "POST"])
+def edit_movie(movie_id):
+
+    movie = mongo.db.movies.find_one({"_id": ObjectId(movie_id)})
+
+    if request.method == "POST":
+        submit = {
+            "category_id": request.form.get("category_id"),
+            "user_rating": request.form.get("user_rating"),
+            "title": movie.get("title"),
+            "poster": movie.get("poster"),
+            "director": movie.get("director"),
+            "genre": movie.get("genre"),
+            "actors": movie.get("actors"),
+            "year": movie.get("year"),
+            "type": movie.get("type"),
+            "rated": movie.get("rated"),
+            "imdb_rating": movie.get("imdb_rating"),
+            "plot": movie.get("plot"),
+            "created_by": session["user"]
+        }
+        mongo.db.movies.replace_one({"_id": ObjectId(movie_id)}, submit)
+        flash("Movie successfully Updated")
+        return redirect("/get_movies")
+
+    categories = list(Category.query.order_by(Category.category_name).all())
+    return render_template(
+        "edit_movie.html", movie=movie, categories=categories)
 
 
 @app.route("/get_categories")
@@ -83,6 +114,7 @@ def add_category():
 
 @app.route("/edit_category/<int:category_id>", methods=["GET", "POST"])
 def edit_category(category_id):
+    
     if "user" not in session or session["user"] != "admin":
         flash("You must be admin to manage categories!")
         return redirect(url_for("get_tasks"))
